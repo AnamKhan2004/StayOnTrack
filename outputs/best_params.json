@@ -1,0 +1,53 @@
+{
+  "Stage 1 (enrollment) | LogReg": {
+    "clf__C": 3.4702669886504163
+  },
+  "Stage 1 (enrollment) | RandomForest": {
+    "clf__n_estimators": 400,
+    "clf__min_samples_leaf": 5,
+    "clf__max_features": "sqrt",
+    "clf__max_depth": null
+  },
+  "Stage 1 (enrollment) | GradBoost": {
+    "clf__l2_regularization": 0.4020759548749851,
+    "clf__learning_rate": 0.2246499798407724,
+    "clf__max_depth": 3,
+    "clf__max_iter": 400,
+    "clf__max_leaf_nodes": 31,
+    "clf__min_samples_leaf": 20
+  },
+  "Stage 2 (+sem 1) | LogReg": {
+    "clf__C": 0.0745934328572655
+  },
+  "Stage 2 (+sem 1) | RandomForest": {
+    "clf__n_estimators": 400,
+    "clf__min_samples_leaf": 2,
+    "clf__max_features": "sqrt",
+    "clf__max_depth": null
+  },
+  "Stage 2 (+sem 1) | GradBoost": {
+    "clf__l2_regularization": 1.2273800987852967,
+    "clf__learning_rate": 0.019657448966046126,
+    "clf__max_depth": null,
+    "clf__max_iter": 200,
+    "clf__max_leaf_nodes": 15,
+    "clf__min_samples_leaf": 10
+  },
+  "Stage 3 (+sem 2) | LogReg": {
+    "clf__C": 0.0745934328572655
+  },
+  "Stage 3 (+sem 2) | RandomForest": {
+    "clf__n_estimators": 400,
+    "clf__min_samples_leaf": 1,
+    "clf__max_features": "sqrt",
+    "clf__max_depth": 20
+  },
+  "Stage 3 (+sem 2) | GradBoost": {
+    "clf__l2_regularization": 0.4020759548749851,
+    "clf__learning_rate": 0.2246499798407724,
+    "clf__max_depth": 3,
+    "clf__max_iter": 400,
+    "clf__max_leaf_nodes": 31,
+    "clf__min_samples_leaf": 20
+  }
+}

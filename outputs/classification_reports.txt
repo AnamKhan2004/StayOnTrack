@@ -1,0 +1,33 @@
+=== Stage 1 (enrollment) | best by validation macro F1: GradBoost ===
+              precision    recall  f1-score   support
+
+     Dropout      0.572     0.542     0.557       284
+    Enrolled      0.284     0.434     0.343       159
+    Graduate      0.689     0.581     0.631       442
+
+    accuracy                          0.542       885
+   macro avg      0.515     0.519     0.510       885
+weighted avg      0.579     0.542     0.555       885
+
+=== Stage 2 (+sem 1) | best by validation macro F1: GradBoost ===
+              precision    recall  f1-score   support
+
+     Dropout      0.812     0.669     0.734       284
+    Enrolled      0.410     0.629     0.496       159
+    Graduate      0.843     0.776     0.808       442
+
+    accuracy                          0.715       885
+   macro avg      0.688     0.691     0.679       885
+weighted avg      0.755     0.715     0.728       885
+
+=== Stage 3 (+sem 2) | best by validation macro F1: GradBoost ===
+              precision    recall  f1-score   support
+
+     Dropout      0.840     0.704     0.766       284
+    Enrolled      0.440     0.692     0.538       159
+    Graduate      0.872     0.783     0.825       442
+
+    accuracy                          0.741       885
+   macro avg      0.717     0.726     0.710       885
+weighted avg      0.784     0.741     0.754       885
+
