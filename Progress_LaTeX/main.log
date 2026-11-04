@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.11.1)  4 NOV 2026 10:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.11.1)  4 NOV 2026 11:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/anamy/Downloads/Project Progress Report - Copy/Project Progress Report/Proposal LaTeX/main.tex"
-(c:/Users/anamy/Downloads/Project Progress Report - Copy/Project Progress Report/Proposal LaTeX/main.tex
+**c:/Users/anamy/Documents/Documents/StayOnTrack/Progress_LaTeX/main.tex
+(c:/Users/anamy/Documents/Documents/StayOnTrack/Progress_LaTeX/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -231,20 +231,6 @@ Package microtype Info: Loading configuration file microtype.cfg.
 File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
 )
 LaTeX Info: Redefining \microtypesetup on input line 3065.
-) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\inconsolata.sty
-Package: inconsolata 2019/05/17 v1.12
- `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
-Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
-) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
- (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
-\XKV@toks=\toks23
-\XKV@tempa@toks=\toks24
-)
-\XKV@depth=\count303
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-\zifour@ocount=\count304
 ) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
  (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
@@ -258,46 +244,135 @@ Package graphics Info: Driver file: pdftex.def on input line 106.
 )
 \Gin@req@height=\dimen170
 \Gin@req@width=\dimen171
+) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen172
+\lightrulewidth=\dimen173
+\cmidrulewidth=\dimen174
+\belowrulesep=\dimen175
+\belowbottomsep=\dimen176
+\aboverulesep=\dimen177
+\abovetopsep=\dimen178
+\cmidrulesep=\dimen179
+\cmidrulekern=\dimen180
+\defaultaddspace=\dimen181
+\@cmidla=\count303
+\@cmidlb=\count304
+\@aboverulesep=\dimen182
+\@belowrulesep=\dimen183
+\@thisruleclass=\count305
+\@lastruleclass=\count306
+\@thisrulewidth=\dimen184
+) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip56
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks23
+\ex@=\dimen185
+)) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen186
+) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count307
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count308
+\leftroot@=\count309
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count310
+\DOTSCASE@=\count311
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box54
+\strutbox@=\box55
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen187
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count312
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count313
+\dotsspace@=\muskip18
+\c@parentequation=\count314
+\dspbrk@lvl=\count315
+\tag@help=\toks24
+\row@=\count316
+\column@=\count317
+\maxfields@=\count318
+\andhelp@=\toks25
+\eqnshift@=\dimen188
+\alignsep@=\dimen189
+\tagshift@=\dimen190
+\tagwidth@=\dimen191
+\totwidth@=\dimen192
+\lineht@=\dimen193
+\@envbody=\toks26
+\multlinegap=\skip57
+\multlinetaggap=\skip58
+\mathdisplay@stack=\toks27
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
 ) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count305
+\l__color_backend_stack_int=\count319
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
  (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count306
-\scratchdimen=\dimen172
-\scratchbox=\box54
-\nofMPsegments=\count307
-\nofMParguments=\count308
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count309
-\MPscratchDim=\dimen173
-\MPnumerator=\count310
-\makeMPintoPDFobject=\count311
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count320
+\scratchdimen=\dimen194
+\scratchbox=\box56
+\nofMPsegments=\count321
+\nofMParguments=\count322
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count323
+\MPscratchDim=\dimen195
+\MPnumerator=\count324
+\makeMPintoPDFobject=\count325
+\everyMPtoPDFconversion=\toks29
 ) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+ (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/grfext\grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
  (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
@@ -338,18 +413,17 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 71.
-(main.out) (main.out)
+Package hyperref Info: Link coloring ON on input line 20.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 71.
-Package microtype Info: Applying patch `item' on input line 71.
-Package microtype Info: Applying patch `toc' on input line 71.
-Package microtype Info: Applying patch `eqnum' on input line 71.
-Package microtype Info: Applying patch `footnote' on input line 71.
-Package microtype Info: Applying patch `verbatim' on input line 71.
-LaTeX Info: Redefining \microtypesetup on input line 71.
+LaTeX Info: Redefining \microtypecontext on input line 20.
+Package microtype Info: Applying patch `item' on input line 20.
+Package microtype Info: Applying patch `toc' on input line 20.
+Package microtype Info: Applying patch `eqnum' on input line 20.
+Package microtype Info: Applying patch `footnote' on input line 20.
+Package microtype Info: Applying patch `verbatim' on input line 20.
+LaTeX Info: Redefining \microtypesetup on input line 20.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -360,78 +434,188 @@ Package microtype Info: Patching command `\showhyphens'.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
- (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-ptm.cfg
+(C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
-) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
 ) (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 72.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 72.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 72.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 72.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 21.
  (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 72.
- (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\t1zi4.fd
-File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 21.
+ (C:\Users\anamy\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 12.0pt on input line 72.
 Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `zi4' (encoding: T1).
+(microtype)             `pcr' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-<example-image-golden.pdf, id=53, 324.82053pt x 200.75pt>
-File: example-image-golden.pdf Graphic file (type pdf)
-<use example-image-golden.pdf>
-Package pdftex.def Info: example-image-golden.pdf  used on input line 115.
-(pdftex.def)             Requested size: 219.08614pt x 135.40543pt.
-LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 118.
-<example-image-a.pdf, id=54, 321.2pt x 240.9pt>
-File: example-image-a.pdf Graphic file (type pdf)
-<use example-image-a.pdf>
-Package pdftex.def Info: example-image-a.pdf  used on input line 123.
-(pdftex.def)             Requested size: 218.51521pt x 163.89069pt.
-<example-image-b.pdf, id=55, 321.2pt x 240.9pt>
-File: example-image-b.pdf Graphic file (type pdf)
-<use example-image-b.pdf>
-Package pdftex.def Info: example-image-b.pdf  used on input line 124.
-(pdftex.def)             Requested size: 218.51521pt x 163.89069pt.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 134.
-LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.95pt on input line 138.
- [1{C:/Users/anamy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}{C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-t1-0.enc}
+
+
+Package natbib Warning: Citation `tinto1975' on page 1 undefined on input line 33.
+
+
+Package natbib Warning: Citation `martins2021' on page 1 undefined on input line 33.
+
+
+Package natbib Warning: Citation `realinho2022' on page 1 undefined on input line 33.
+
+
+Package natbib Warning: Citation `breiman2001' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `friedman2001' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `chen2016xgboost' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `ke2017lightgbm' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `grinsztajn2022' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `chawla2002' on page 1 undefined on input line 37.
+
+
+Package natbib Warning: Citation `niculescu2005' on page 1 undefined on input line 37.
+
+
+Package natbib Warning: Citation `hardt2016' on page 1 undefined on input line 37.
+
+
+Package natbib Warning: Citation `lundberg2017' on page 1 undefined on input line 37.
+
+[1{C:/Users/anamy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 
- <C:/Users/anamy/AppData/Local/Programs/MiKTeX/tex/latex/mwe/example-image-golden.pdf>] (main.bbl) [2 <C:/Users/anamy/AppData/Local/Programs/MiKTeX/tex/latex/mwe/example-image-a.pdf> <C:/Users/anamy/AppData/Local/Programs/MiKTeX/tex/latex/mwe/example-image-b.pdf>] (main.aux)
+]
+
+LaTeX Warning: Reference `fig:classes' on page 2 undefined on input line 43.
+
+
+LaTeX Warning: File `outputs/class_distribution.png' not found on input line 47.
+
+
+c:/Users/anamy/Documents/Documents/StayOnTrack/Progress_LaTeX/main.tex:47: Package pdftex.def Error: File `outputs/class_distribution.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 ...lumnwidth]{outputs/class_distribution.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `tab:stages' on page 2 undefined on input line 58.
+
+
+Package natbib Warning: Citation `pedregosa2011' on page 2 undefined on input line 79.
+
+
+Underfull \hbox (badness 4001) in paragraph at lines 81--82
+ []\T1/ptm/b/n/10.95 (+20) Baselines and mod-els.[] \T1/ptm/m/n/10.95 (+20) The re-quired base-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
+\T1/ptm/m/n/10.95 (+20) line is a majority-class pre-dic-tor (al-ways
+ []
+
+
+Underfull \hbox (badness 2393) in paragraph at lines 81--82
+\T1/ptm/m/n/10.95 (+20) Grad-u-ate). We train three learned mod-els:
+ []
+
+
+Underfull \hbox (badness 2150) in paragraph at lines 81--82
+\T1/ptm/m/n/10.95 (+20) (1) multi-no-mial lo-gis-tic re-gres-sion, an in-ter-
+ []
+
+[2]
+
+LaTeX Warning: Reference `tab:results' on page 3 undefined on input line 124.
+
+
+LaTeX Warning: File `outputs/stage_comparison.png' not found on input line 128.
+
+
+c:/Users/anamy/Documents/Documents/StayOnTrack/Progress_LaTeX/main.tex:128: Package pdftex.def Error: File `outputs/stage_comparison.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.128 ...\textwidth]{outputs/stage_comparison.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `outputs/confusion_gradboost.png' not found on input line 135.
+
+
+c:/Users/anamy/Documents/Documents/StayOnTrack/Progress_LaTeX/main.tex:135: Package pdftex.def Error: File `outputs/confusion_gradboost.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.135 ...xtwidth]{outputs/confusion_gradboost.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Package natbib Warning: Citation `chawla2002' on page 3 undefined on input line 147.
+
+[3] (main.bbl)
+
+Package natbib Warning: There were undefined citations.
+
+[4] [5] [6] (main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 34DEC0E26ED0D2BC1A332FDA77E8D570;1364.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  3B8E3ADB22F4D217C9DE254831486270;781.
  ) 
 Here is how much of TeX's memory you used:
- 13989 strings out of 467871
- 227626 string characters out of 5418376
- 684211 words of memory out of 5000000
- 42534 multiletter control sequences out of 15000+600000
- 661676 words of font info for 161 fonts, out of 8000000 for 9000
+ 14698 strings out of 467871
+ 236592 string characters out of 5418376
+ 697177 words of memory out of 5000000
+ 43090 multiletter control sequences out of 15000+600000
+ 672943 words of font info for 254 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,10n,93p,1098b,495s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (2 pages, 150437 bytes).
+ 90i,10n,93p,1324b,467s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/anamy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (6 pages, 174444 bytes).
 PDF statistics:
- 166 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
- 36464 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 150 PDF objects out of 1000 (max. 8388607)
+ 49 named destinations out of 1000 (max. 500000)
+ 40961 words of extra memory for PDF output out of 42996 (max. 10000000)
 

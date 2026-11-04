@@ -1,195 +1,156 @@
+% Group 29 progress report. If your provided template has a different preamble,
+% keep ITS preamble and paste everything from \title{...} down to \end{document}.
 \documentclass[11pt]{article}
-
-% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
-% Change to "preprint" to generate a non-anonymous version with page numbers.
-\usepackage[]{acl}
+\usepackage{acl}
 \usepackage{times}
 \usepackage{latexsym}
-
-% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
 \usepackage[T1]{fontenc}
-% For Vietnamese characters
-% \usepackage[T5]{fontenc}
-% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
-
-% This assumes your files are encoded as UTF8
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
-\usepackage{inconsolata}
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
 
-% If the title and author information does not fit in the area allocated, uncomment the following
-%
-%\setlength\titlebox{<dim>}
-%
-% and set <dim> to something 5cm or larger.
+\title{Group 29 Progress Report:\\
+Early Prediction of Student Dropout and Academic Success}
 
-\title{Group X Progress Report:\\My Group's Project Name}
-
-
-\author{First Author, Second Author, Third Author \\
-  \texttt{\{macid1,macid2,macid3\}@mcmaster.ca} }
-
-%\author{
-%  \textbf{First Author\textsuperscript{1}},
-%  \textbf{Second Author\textsuperscript{1,2}},
-%  \textbf{Third T. Author\textsuperscript{1}},
-%  \textbf{Fourth Author\textsuperscript{1}},
-%\\
-%  \textbf{Fifth Author\textsuperscript{1,2}},
-%  \textbf{Sixth Author\textsuperscript{1}},
-%  \textbf{Seventh Author\textsuperscript{1}},
-%  \textbf{Eighth Author \textsuperscript{1,2,3,4}},
-%\\
-%  \textbf{Ninth Author\textsuperscript{1}},
-%  \textbf{Tenth Author\textsuperscript{1}},
-%  \textbf{Eleventh E. Author\textsuperscript{1,2,3,4,5}},
-%  \textbf{Twelfth Author\textsuperscript{1}},
-%\\
-%  \textbf{Thirteenth Author\textsuperscript{3}},
-%  \textbf{Fourteenth F. Author\textsuperscript{2,4}},
-%  \textbf{Fifteenth Author\textsuperscript{1}},
-%  \textbf{Sixteenth Author\textsuperscript{1}},
-%\\
-%  \textbf{Seventeenth S. Author\textsuperscript{4,5}},
-%  \textbf{Eighteenth Author\textsuperscript{3,4}},
-%  \textbf{Nineteenth N. Author\textsuperscript{2,5}},
-%  \textbf{Twentieth Author\textsuperscript{1}}
-%\\
-%\\
-%  \textsuperscript{1}Affiliation 1,
-%  \textsuperscript{2}Affiliation 2,
-%  \textsuperscript{3}Affiliation 3,
-%  \textsuperscript{4}Affiliation 4,
-%  \textsuperscript{5}Affiliation 5
-%\\
-%  \small{
-%    \textbf{Correspondence:} \href{mailto:email@domain}{email@domain}
-%  }
-%}
+\author{Anam Khan \and Haniya Kashif \\
+  \texttt{\{khana489,kashih2\}@mcmaster.ca}}
 
 \begin{document}
 \maketitle
-% \begin{abstract}
-% \end{abstract}
 
+%% ---------------------------------------------------------------- 1
 \section{Introduction}
+Universities usually learn that a student is struggling only after the student has withdrawn or failed enough courses that recovery is unrealistic. Dropout is costly for students (debt without a degree), for institutions (lost tuition and weaker graduation statistics) and for society. Advisors cannot manually monitor thousands of students, so an automated early-warning system could let staff offer tutoring, financial aid or counselling while it still matters.
 
-Here, write a brief introduction to the problem you are solving. This can be adapted from your problem description and motivation from the original proposal. This should be around 0.25-0.5 pages.
+We build such a system as a three-class classifier (Dropout, Enrolled, Graduate) on tabular student records. Our central question is \emph{how early} a student's outcome can be predicted reliably. We ask the same question at three points in time with progressively more information: at enrollment (Stage~1), after semester~1 (Stage~2) and after semester~2 (Stage~3). A moderately accurate Stage~1 model may be more useful than a more accurate Stage~3 model, because only an early prediction leaves time to help.
 
+This report describes our preliminary implementation: the dataset and preprocessing, leakage-safe stage-wise feature sets, a majority-class baseline and three learned models (logistic regression, random forest, gradient boosting), and an evaluation of all of them at all three stages. Challenges we anticipated, and discuss below, are class imbalance, the ambiguity of the ``Enrolled'' label, weak early signal, feature leakage across stages, and fairness.
+
+%% ---------------------------------------------------------------- 2
 \section{Related Work}
+Student retention has long been studied in education research; \citet{tinto1975} gave an influential theoretical account of dropout from higher education based on academic and social integration. More recent work uses machine learning on institutional records. Our dataset comes from \citet{martins2021}, who built it from several databases of a Portuguese higher-education institution for early prediction of student performance, and is documented in more detail by \citet{realinho2022}. These papers motivate the task and provide the data. Our project differs in that we explicitly build one feature set per prediction point, with variables assigned conservatively to avoid leakage, and compare models across those stages.
 
-Here, talk about the related work you encountered for your approach. Cite at least 5 references. Refer to item 2. No one has done exactly your task? Write about the most similar thing you can find. This should be around 0.25-0.5 pages.
+For tabular data with mixed numeric and categorical features, tree ensembles are strong default choices. Random forests \citep{breiman2001} average many decorrelated trees, and gradient boosting \citep{friedman2001} builds trees sequentially to correct earlier errors. Efficient implementations such as XGBoost \citep{chen2016xgboost} and histogram-based boosting \citep{ke2017lightgbm} are widely used, and \citet{grinsztajn2022} found that tree-based models often remain ahead of deep learning on medium-sized tabular datasets. We therefore use ensembles of trees, with logistic regression as an interpretable baseline.
 
+Because our classes are imbalanced, we also draw on work on imbalance and probability quality. \citet{chawla2002} proposed SMOTE oversampling, which we plan to compare against class weighting. \citet{niculescu2005} showed that predicted probabilities from many classifiers are poorly calibrated, motivating our planned calibration checks. For fairness, \citet{hardt2016} define group-level error criteria such as equality of opportunity, which we will use to compare error rates across groups, and \citet{lundberg2017} provide SHAP, one option for interpreting predictions.
+
+%% ---------------------------------------------------------------- 3
 \section{Dataset}
+We use the public UCI ``Predict Students' Dropout and Academic Success'' dataset (CC BY 4.0), which contains 4,424 student records with 36 features and one target label (Dropout, Enrolled or Graduate) drawn from the institution's records, so no manual annotation was needed. Features cover demographics, application and enrollment information, previous education, parents' education and occupation, scholarship and payment status, first- and second-semester curricular unit statistics, and three macroeconomic indicators (unemployment, inflation, GDP). The data are included with our submission (\texttt{data.csv}).
 
-You should write about your dataset here, following the guidelines regarding item 1. This section may be 0.5-1 pages. Depending on your specific dataset, you may want to include subsections for the preprocessing, annotation, etc.
-
-\section{Features}
-
-Describe any features you used for your model, or how your data was input to your model. Are you doing feature engineering or feature selection? Are you learning embeddings? Is it all part of one neural network? Refer to item 2. This may range from 0.25 pages to 0.5 pages.
-
-\section{Implementation}
-
-Describe your model and implementation here. Refer to item 4. This may take around a page.
-
-\section{Results and Evaluation}
-
-How are you evaluating your model? What results do you have so far? What are your baselines? Refer to item 5. This may take around 0.5 pages.
-
-\section{Feedback and Plans}
-
-Write about your plans for the remainder of the project. This should include a discussion of the feedback you received from your TA, and how you plan to improve your approach. Reflect on your implementation and areas for improvement. Refer to item 6. This may be around 0.5 pages.
-
-\section{Template Notes}
-
-You can remove this section or comment it out, as it only contains instructions for how to use this template. You may use subsections in your document as you find appropriate.
-
-\subsection{Tables and figures}
-
-See Table~\ref{citation-guide} for an example of a table and its caption.
-See Figure~\ref{fig:experiments} for an example of a figure and its caption.
-
+\paragraph{Class distribution.} The classes are imbalanced: Graduate is 49.9\% of students (2,209), Dropout 32.1\% (1,421) and Enrolled 17.9\% (794) (Figure~\ref{fig:classes}). A majority-class predictor therefore reaches about 50\% accuracy but only 0.222 macro F1.
 
 \begin{figure}[t]
-  \includegraphics[width=\columnwidth]{example-image-golden}
-  \caption{A figure with a caption that runs for more than one line.
-    Example image is usually available through the \texttt{mwe} package
-    without even mentioning it in the preamble.}
-  \label{fig:experiments}
+  \centering
+  \includegraphics[width=0.7\columnwidth]{outputs/class_distribution.png}
+  \caption{Class distribution of the 4,424 students.}
+  \label{fig:classes}
 \end{figure}
 
-\begin{figure*}[t]
-  \includegraphics[width=0.48\linewidth]{example-image-a} \hfill
-  \includegraphics[width=0.48\linewidth]{example-image-b}
-  \caption {A minimal working example to demonstrate how to place
-    two images side-by-side.}
-\end{figure*}
+\paragraph{Preprocessing.} The dataset documentation reports that anomalies and missing values were handled by its creators; we verified that there are no missing values and checked for duplicate rows. We stripped stray whitespace from column names, mapped the target to integers (Dropout=0, Enrolled=1, Graduate=2), and dropped the Nationality column from the main feature set because of fairness concerns. Eight nominal code columns (marital status, application mode, course, previous qualification, and the mothers' and fathers' qualification and occupation) are treated as categorical, since their integer codes carry no numeric meaning. All other columns are used as numeric or binary values.
 
+\paragraph{Split.} We make one stratified 80/20 split (3,539 training and 885 test students) with a fixed random seed. The same split is reused for every stage and model so that stage comparisons are fair. The test set is used only to report final numbers.
 
-\subsection{Citations}
+%% ---------------------------------------------------------------- 4
+\section{Features}
+\paragraph{Stage-wise feature sets.} We assign each variable to the earliest stage at which it would be known (Table~\ref{tab:stages}). Stage~1 contains demographic, application, prior-education, parental, scholarship and macroeconomic variables. Stage~2 adds first-semester curricular unit statistics (credited, enrolled, evaluated, approved, grade, without evaluations) and the payment variables Tuition fees up to date and Debtor, which we place in Stage~2 because payment status can change after enrollment and may already reflect a student's decision to leave. Stage~3 adds the second-semester statistics. Scholarship status stays in Stage~1 because scholarships are generally awarded as part of enrollment, and macroeconomic indicators stay in Stage~1 because they do not depend on the student. Each model only receives its own stage's features, which prevents leakage from later semesters into earlier predictions.
 
-\begin{table*}
-  \centering
-  \begin{tabular}{lll}
-    \hline
-    \textbf{Output}           & \textbf{natbib command} & \textbf{ACL only command} \\
-    \hline
-    \citep{Gusfield:97}       & \verb|\citep|           &                           \\
-    \citealp{Gusfield:97}     & \verb|\citealp|         &                           \\
-    \citet{Gusfield:97}       & \verb|\citet|           &                           \\
-    \citeyearpar{Gusfield:97} & \verb|\citeyearpar|     &                           \\
-    \citeposs{Gusfield:97}    &                         & \verb|\citeposs|          \\
-    \hline
+\begin{table}[t]
+  \centering\small
+  \begin{tabular}{llr}
+    \toprule
+    Stage & Adds & \# features \\
+    \midrule
+    1 & enrollment, background, macro & 21 \\
+    2 & payment status, semester 1 & 29 \\
+    3 & semester 2 & 35 \\
+    \bottomrule
   \end{tabular}
-  \caption{\label{citation-guide}
-    Citation commands supported by the style file.
-  }
+  \caption{Feature sets per stage (Nationality excluded).}
+  \label{tab:stages}
+\end{table}
+
+\paragraph{Representation.} For logistic regression we one-hot encode the eight nominal columns and standardize the numeric columns. For tree models we ordinal-encode the nominal columns and leave numeric columns unscaled, since trees are insensitive to monotone rescaling. We have not yet done any hand-crafted feature engineering or automatic feature selection; the only selection is the stage grouping and the removal of Nationality. Ratio features (for example units approved divided by units enrolled) and a semester-1 to semester-2 grade change are candidates for future work.
+
+%% ---------------------------------------------------------------- 5
+\section{Implementation}
+All models are implemented with scikit-learn \citep{pedregosa2011}, each as a pipeline of preprocessing and classifier.
+
+\paragraph{Baselines and models.} The required baseline is a majority-class predictor (always Graduate). We train three learned models: (1) multinomial logistic regression, an interpretable baseline; (2) a random forest; and (3) histogram-based gradient boosting (scikit-learn's \texttt{HistGradientBoostingClassifier}), the main model, which we expect to be strongest on tabular data.
+
+\paragraph{Loss functions and optimization.} Logistic regression minimizes the L2-regularized multinomial cross-entropy
+\begin{equation*}
+\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N} w_{y_i}\log p_{i,y_i} + \tfrac{1}{2C}\lVert\theta\rVert_2^2,
+\end{equation*}
+optimized with L-BFGS. Gradient boosting minimizes the same multiclass cross-entropy by adding one tree per iteration along the negative gradient of the loss, with a 10\% internal validation split for early stopping. Random forest has no global loss; each tree chooses splits by Gini impurity and predictions are averaged over trees.
+
+\paragraph{Class imbalance.} All three learned models use balanced class weights, $w_c = N/(K N_c)$ with $K=3$, so that errors on Dropout and Enrolled are penalized more heavily than errors on Graduate.
+
+\paragraph{Hyperparameter tuning.} For each stage and model we run randomized search with 5-fold stratified cross-validation on the training set, scoring macro F1, and then refit the best configuration on the full training set. Search spaces: regularization strength $C$ (log-uniform in $[10^{-3},10^{2}]$) for logistic regression; number of trees, maximum depth, minimum leaf size and \texttt{max\_features} for the random forest; and learning rate, depth, number of leaves, minimum leaf size, L2 penalty and iterations for boosting. Selected values are saved in \texttt{best\_params.json}.
+
+\paragraph{Ablations.} So far, the stage comparison is itself our main ablation: it measures what each additional group of features (semester~1, then semester~2) contributes to every model. We have not yet ablated imbalance handling (class weights versus SMOTE versus none) or the macroeconomic features.
+
+%% ---------------------------------------------------------------- 6
+\section{Results and Evaluation}
+\paragraph{Evaluation strategy.} We use the single stratified train/test split from Section~3. Validation estimates come from 5-fold stratified cross-validated out-of-fold predictions on the training set; test estimates come from the refit model on the held-out test set. Macro F1 and dropout recall are our main metrics, because accuracy is misleading with imbalanced classes and a missed dropout is the costliest error. We also report dropout precision, Enrolled recall, balanced accuracy, log loss and the multiclass Brier score, and examine confusion matrices.
+
+\begin{table*}[t]
+  \centering\small
+  \begin{tabular}{llcccccc}
+    \toprule
+    Stage & Model & Val F1 & Test F1 & Bal.\ Acc. & Dropout R & Dropout P & Enrolled R \\
+    \midrule
+    --- & Majority & .222 & .222 & .333 & .000 & .000 & .000 \\
+    \midrule
+    1 & LogReg       & .533 & .520 & .531 & .563 & .604 & .465 \\
+    1 & RandomForest & .537 & .494 & .499 & .553 & .520 & .346 \\
+    1 & GradBoost    & .538 & .510 & .519 & .542 & .572 & .434 \\
+    \midrule
+    2 & LogReg       & .682 & .664 & .673 & .658 & .803 & .585 \\
+    2 & RandomForest & .691 & .684 & .686 & .701 & .787 & .528 \\
+    2 & GradBoost    & .696 & .679 & .691 & .669 & .812 & .629 \\
+    \midrule
+    3 & LogReg       & .716 & .701 & .715 & .683 & .822 & .667 \\
+    3 & RandomForest & .721 & .715 & .715 & .718 & .826 & .560 \\
+    3 & GradBoost    & .724 & .710 & .726 & .704 & .840 & .692 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Macro F1 (validation = cross-validated, and test), and test balanced accuracy, dropout recall (R), dropout precision (P) and Enrolled recall. The majority baseline always predicts Graduate and is identical at all stages.}
+  \label{tab:results}
 \end{table*}
 
-Table~\ref{citation-guide} shows the syntax supported by the style files.
-We encourage you to use the natbib styles.
-You can use the command \verb|\citet| (cite in text) to get ``author (year)'' citations, like this citation to a paper by \citet{Gusfield:97}.
-You can use the command \verb|\citep| (cite in parentheses) to get ``(author, year)'' citations \citep{Gusfield:97}.
-You can use the command \verb|\citealp| (alternative cite without parentheses) to get ``author, year'' citations, which is useful for using citations within parentheses (e.g. \citealp{Gusfield:97}).
+\paragraph{Findings.} Table~\ref{tab:results} summarizes results. (i)~All learned models far exceed the majority baseline (0.222 macro F1, zero dropout recall). (ii)~Waiting helps, mostly once. The best test macro F1 rises from about 0.52 at Stage~1 to about 0.68 at Stage~2 and 0.71 at Stage~3, so most of the gain arrives with semester-1 information, while semester~2 adds comparatively little. (iii)~At every stage the three learned models are within about 0.02 test macro F1 of each other, which on 885 test students is too close to declare a winner; validation scores are similarly close, with gradient boosting marginally ahead. Logistic regression is surprisingly competitive, suggesting much of the signal is close to linear in the semester performance features. (iv)~Enrolled is the hardest class (recall 0.35--0.47 at Stage~1, 0.56--0.69 at Stage~3), consistent with its unresolved outcome. (v)~Validation and test macro F1 differ by at most about 0.04, so we are not seeing severe overfitting to the tuning folds, although validation scores are slightly optimistic because hyperparameters were chosen on the same folds. (vi)~Test log loss improves from about 0.94--0.97 at Stage~1 to about 0.60--0.63 at Stage~3.
 
-\subsection{References}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.8\textwidth]{outputs/stage_comparison.png}
+  \caption{Test macro F1 and dropout recall by stage and model.}
+  \label{fig:stages}
+\end{figure*}
 
-\nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.85\textwidth]{outputs/confusion_gradboost.png}
+  \caption{Row-normalized test confusion matrices for gradient boosting at each stage.}
+  \label{fig:cm}
+\end{figure*}
 
-Many websites where you can find academic papers also allow you to export a bib file for citation or bib formatted entry. Copy this into the \texttt{custom.bib} and you will be able to cite the paper in the \LaTeX{}. You can remove the example entries.
+%% ---------------------------------------------------------------- 7
+\section{Feedback and Plans}
+\paragraph{TA feedback.} On our proposal, the TA (Abdelaziz Serour) advised that Nationality need not be excluded entirely: we keep it out of the main setting and, if time permits, compare against a model that includes it, noting that removing it does not remove indirect demographic bias through correlated features. They also recommended keeping the three-class problem as the main task rather than merging classes, and agreed that shared, rotating responsibilities are reasonable for a two-person team. We followed both technical points in the experiments above.
+\textbf{[TODO: Add the TA's feedback on this progress report here: who you spoke to, when, what they said about your results and next steps, and how you respond.]}
 
-\subsection{Equations}
+\paragraph{Reflection.} Our results show that Stage~1 is weak (macro F1 about 0.5), that the learned models are nearly tied, and that Enrolled is the main source of error. Because the models are so close, we cannot yet claim that boosting is better than a regularized linear model, and our single split on 885 test students gives noisy comparisons.
 
-An example equation is shown below:
-\begin{equation}
-  \label{eq:example}
-  A = \pi r^2
-\end{equation}
+\paragraph{Plans.} (1)~Reduce noise in comparisons by repeating cross-validation with several seeds and reporting confidence intervals, and test whether model differences are significant. (2)~Improve Enrolled and dropout recall with threshold tuning on predicted probabilities and compare class weighting against SMOTE \citep{chawla2002}. (3)~Add engineered features such as approval ratios and semester-to-semester changes, and ablate the macroeconomic features. (4)~Check calibration of predicted probabilities and calibrate if needed. (5)~Interpret the best models with permutation importance and SHAP. (6)~Run fairness checks (for example by gender and scholarship status, using group-wise recall) and test whether features such as International status, Displaced or parental variables act as proxies for nationality; if time permits, run the secondary experiment including Nationality. (7)~If the three-class task proves too overlapping for the Enrolled class, discuss it as a limitation rather than switching to a binary task, following the TA's advice.
 
-Labels for equation numbers, sections, subsections, figures and tables
-are all defined with the \verb|\label{label}| command and cross references
-to them are made with the \verb|\ref{label}| command.
-This an example cross-reference to Equation~\ref{eq:example}. You can also write equations inline, like this: $A=\pi r^2$.
-
-
-% \section*{Limitations}
-
+%% ---------------------------------------------------------------- Team
 \section*{Team Contributions}
+\textbf{[TODO: Replace with a few sentences on what each member did. For example: Anam Khan: ... Haniya Kashif: ... Both: ...]}
 
-Write in this section a few sentences describing the contributions of each team member. What did each member work on? Refer to item 7.
-
-% Bibliography entries for the entire Anthology, followed by custom entries
-%\bibliography{custom,anthology-overleaf-1,anthology-overleaf-2}
-
-% Custom bibliography entries only
 \bibliography{custom}
-
-% \appendix
-
-% \section{Example Appendix}
-% \label{sec:appendix}
-
-% This is an appendix.
+\bibliographystyle{acl_natbib}
 
 \end{document}
