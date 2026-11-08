@@ -13,6 +13,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,3 +35,10 @@ jobs:
         with:
           name: latex-report
           path: Progress_LaTeX/main.pdf
+
+      - name: Commit compiled PDF
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update compiled PDF [skip ci]"
+          file_pattern: Progress_LaTeX/main.pdf
