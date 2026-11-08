@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'Progress_LaTeX/**'
+      - 'src/outputs/**'
       - '.github/workflows/build-latex.yml'
 
   pull_request:
@@ -23,7 +24,7 @@ jobs:
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: Progress_LaTeX/main.tex
+          root_file: main.tex
           working_directory: Progress_LaTeX
 
       - name: Upload PDF
