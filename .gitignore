@@ -32,3 +32,6 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Generated LaTeX PDF
+Progress_LaTeX/main.pdf
