@@ -8,6 +8,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{graphicx}
+\graphicspath{{../src/outputs/}}
 \usepackage{booktabs}
 \usepackage{amsmath}
 
@@ -44,7 +45,7 @@ We use the public UCI ``Predict Students' Dropout and Academic Success'' dataset
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.7\columnwidth]{outputs/class_distribution.png}
+  \includegraphics[width=0.7\columnwidth]{class_distribution.png}
   \caption{Class distribution of the 4,424 students.}
   \label{fig:classes}
 \end{figure}
@@ -125,14 +126,14 @@ optimized with L-BFGS. Gradient boosting minimizes the same multiclass cross-ent
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.8\textwidth]{outputs/stage_comparison.png}
+  \includegraphics[width=0.8\textwidth]{stage_comparison.png}
   \caption{Test macro F1 and dropout recall by stage and model.}
   \label{fig:stages}
 \end{figure*}
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{outputs/confusion_gradboost.png}
+  \includegraphics[width=0.85\textwidth]{confusion_gradboost.png}
   \caption{Row-normalized test confusion matrices for gradient boosting at each stage.}
   \label{fig:cm}
 \end{figure*}
