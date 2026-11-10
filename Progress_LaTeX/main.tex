@@ -1,5 +1,3 @@
-% Group 29 progress report. If your provided template has a different preamble,
-% keep ITS preamble and paste everything from \title{...} down to \end{document}.
 \documentclass[11pt]{article}
 \usepackage{acl}
 \usepackage{times}
@@ -23,20 +21,19 @@ Early Prediction of Student Dropout and Academic Success}
 
 %% ---------------------------------------------------------------- 1
 \section{Introduction}
-Universities usually learn that a student is struggling only after the student has withdrawn or failed enough courses that recovery is unrealistic. Dropout is costly for students (debt without a degree), for institutions (lost tuition and weaker graduation statistics) and for society. Advisors cannot manually monitor thousands of students, so an automated early-warning system could let staff offer tutoring, financial aid or counselling while it still matters.
-
-We build such a system as a three-class classifier (Dropout, Enrolled, Graduate) on tabular student records. Our central question is \emph{how early} a student's outcome can be predicted reliably. We ask the same question at three points in time with progressively more information: at enrollment (Stage~1), after semester~1 (Stage~2) and after semester~2 (Stage~3). A moderately accurate Stage~1 model may be more useful than a more accurate Stage~3 model, because only an early prediction leaves time to help.
-
-This report describes our preliminary implementation: the dataset and preprocessing, leakage-safe stage-wise feature sets, a majority-class baseline and three learned models (logistic regression, random forest, gradient boosting), and an evaluation of all of them at all three stages. Challenges we anticipated, and discuss below, are class imbalance, the ambiguity of the ``Enrolled'' label, weak early signal, feature leakage across stages, and fairness.
-
+Universities usually learn that a student is struggling only after the student has withdrawn or failed enough courses that recovery is unrealistic. Dropout is costly for students (debt without a degree), for institutions (lost tuition and weaker graduation statistics) and for society (a lower return on public education spending). Advisors cannot manually monitor thousands of students, so an automated early-warning system could let staff offer tutoring, financial aid or counselling while it still matters.
+ 
+We build such a system as a three-class classifier (Dropout, Enrolled, Graduate) on tabular student records. Our central question is \emph{how early} a student's outcome can be predicted reliably. We ask the same question at three points in time with progressively more information: at enrollment (Stage~1), after semester~1 (Stage~2) and after semester~2 (Stage~3). A moderately accurate Stage~1 model may be more useful than a more accurate Stage~3 model, because only an early prediction leaves time to help. Anticipated challenges are class imbalance, the ambiguity of the ``Enrolled'' label, weak early signal, feature leakage across stages, and fairness.
+ 
+This report describes our preliminary implementation: the dataset and preprocessing, leakage-safe stage-wise feature sets, a majority-class baseline, and three learned models (logistic regression, random forest and gradient boosting) evaluated at all three stages. Even at this early point, all learned models clearly beat the majority baseline (0.22 macro F1). Test macro F1 rises from about 0.52 at Stage~1 to about 0.71 at Stage~3, with most of the gain arriving once semester-1 information is available.
 %% ---------------------------------------------------------------- 2
 \section{Related Work}
-Student retention has long been studied in education research; \citet{tinto1975} gave an influential theoretical account of dropout from higher education based on academic and social integration. More recent work uses machine learning on institutional records. Our dataset comes from \citet{martins2021}, who built it from several databases of a Portuguese higher-education institution for early prediction of student performance, and is documented in more detail by \citet{realinho2022}. These papers motivate the task and provide the data. Our project differs in that we explicitly build one feature set per prediction point, with variables assigned conservatively to avoid leakage, and compare models across those stages.
-
-For tabular data with mixed numeric and categorical features, tree ensembles are strong default choices. Random forests \citep{breiman2001} average many decorrelated trees, and gradient boosting \citep{friedman2001} builds trees sequentially to correct earlier errors. Efficient implementations such as XGBoost \citep{chen2016xgboost} and histogram-based boosting \citep{ke2017lightgbm} are widely used, and \citet{grinsztajn2022} found that tree-based models often remain ahead of deep learning on medium-sized tabular datasets. We therefore use ensembles of trees, with logistic regression as an interpretable baseline.
-
-Because our classes are imbalanced, we also draw on work on imbalance and probability quality. \citet{chawla2002} proposed SMOTE oversampling, which we plan to compare against class weighting. \citet{niculescu2005} showed that predicted probabilities from many classifiers are poorly calibrated, motivating our planned calibration checks. For fairness, \citet{hardt2016} define group-level error criteria such as equality of opportunity, which we will use to compare error rates across groups, and \citet{lundberg2017} provide SHAP, one option for interpreting predictions.
-
+\paragraph{Student retention and dropout prediction} Student retention has long been studied in education research; \citet{tinto1975} gave an influential theoretical account of dropout from higher education based on academic and social integration. More recent work applies machine learning to institutional records. Our dataset was created at a Portuguese polytechnic institute to support early identification of students at risk and was introduced by \citet{martins2021}, who used only information known at enrollment, tested synthetic oversampling to handle class imbalance, and compared standard classifiers with boosting algorithms, finding that boosting worked better; they listed first-year academic performance as future work. The same group later studied prediction at several phases of the enrollment year and found that random forests, combined with imbalance-handling strategies, performed best \citep{martins2023}. \citet{realinho2022} document the dataset itself: it merges several disjoint institutional databases and labels each student as Dropout, Enrolled or Graduate at the end of the normal course duration. Our work is closest to these phased studies, but differs in assigning each variable to a stage conservatively to avoid leakage (for example, placing payment status after enrollment), excluding Nationality from the main feature set, and planning explicit fairness, proxy-feature and calibration analyses across stages.
+These papers motivate the task and provide the data. Our project differs in that we explicitly build one feature set per prediction point, assigning variables conservatively to avoid leakage, and compare models across those stages rather than treating all features as available at once.
+ 
+\paragraph{Models for tabular data} For tabular data with mixed numeric and categorical features, tree ensembles are strong default choices. Random forests \citep{breiman2001} average many decorrelated trees, and gradient boosting \citep{friedman2001} builds trees sequentially to correct earlier errors. Efficient implementations such as XGBoost \citep{chen2016xgboost} and LightGBM \citep{ke2017lightgbm} are widely used; the histogram-based boosting in scikit-learn that we use follows the LightGBM design. \citet{grinsztajn2022} found that tree-based models often remain ahead of deep learning on medium-sized tabular datasets, which is why we focus on tree ensembles and use logistic regression as an interpretable baseline.
+ 
+\paragraph{Imbalance, calibration and fairness} Because our classes are imbalanced, we also draw on work on imbalance and probability quality. \citet{chawla2002} proposed SMOTE oversampling, which we plan to compare against class weighting. \citet{niculescu2005} showed that predicted probabilities from many classifiers are poorly calibrated, motivating our planned calibration checks. For fairness, \citet{hardt2016} define group-level error criteria such as equality of opportunity, which we will use to compare error rates across groups (also why we exclude using nationality for now), and \citet{lundberg2017} provide SHAP, one option for interpreting predictions.
 %% ---------------------------------------------------------------- 3
 \section{Dataset}
 We use the public UCI ``Predict Students' Dropout and Academic Success'' dataset (CC BY 4.0), which contains 4,424 student records with 36 features and one target label (Dropout, Enrolled or Graduate) drawn from the institution's records, so no manual annotation was needed. Features cover demographics, application and enrollment information, previous education, parents' education and occupation, scholarship and payment status, first- and second-semester curricular unit statistics, and three macroeconomic indicators (unemployment, inflation, GDP). The data are included with our submission (\texttt{data.csv}).
@@ -77,22 +74,26 @@ We use the public UCI ``Predict Students' Dropout and Academic Success'' dataset
 
 %% ---------------------------------------------------------------- 5
 \section{Implementation}
-All models are implemented with scikit-learn \citep{pedregosa2011}, each as a pipeline of preprocessing and classifier.
-
-\paragraph{Baselines and models} The required baseline is a majority-class predictor (always Graduate). We train three learned models: (1) multinomial logistic regression, an interpretable baseline; (2) a random forest; and (3) histogram-based gradient boosting (scikit-learn's \texttt{HistGradientBoostingClassifier}), the main model, which we expect to be strongest on tabular data.
-
-\paragraph{Loss functions and optimization} Logistic regression minimizes the L2-regularized multinomial cross-entropy
+All models are implemented with scikit-learn. Each model is a pipeline of preprocessing followed by a classifier, so preprocessing (encoding and scaling) is fit only on the training portion of each cross-validation fold and never sees validation or test students.
+ 
+\paragraph{Baseline and models} The required baseline is a majority-class predictor, which always predicts Graduate (49.9\% of students). We train three learned models: (1) multinomial logistic regression, an interpretable linear baseline; (2) a random forest; and (3) histogram-based gradient boosting, the model we expect to be strongest on tabular data. Logistic regression, random forests and boosting are standard choices for this kind of data and give us a progression from a linear model to bagged trees to boosted trees. Each is trained separately at each of the three stages, giving nine learned models plus the baseline.
+ 
+\paragraph{Class imbalance} All three learned models use balanced class weights, $w_c = N/(K N_c)$ with $K=3$ classes and $N_c$ training students in class $c$, so that errors on the smaller Dropout and Enrolled classes are penalized more heavily than errors on Graduate.
+ 
+\paragraph{Loss functions and optimization}
+\emph{Logistic regression} minimizes the L2-regularized, class-weighted multinomial cross-entropy (in scikit-learn's parameterization)
 \begin{equation*}
-\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N} w_{y_i}\log p_{i,y_i} + \tfrac{1}{2C}\lVert\theta\rVert_2^2,
+\min_{\theta}\; \tfrac{1}{2}\lVert\theta\rVert_2^2 \;+\; C\sum_{i=1}^{N} w_{y_i}\,\bigl(-\log p_{i,y_i}\bigr),
 \end{equation*}
-optimized with L-BFGS. Gradient boosting minimizes the same multiclass cross-entropy by adding one tree per iteration along the negative gradient of the loss, with a 10\% internal validation split for early stopping. Random forest has no global loss; each tree chooses splits by Gini impurity and predictions are averaged over trees.
-
-\paragraph{Class imbalance} All three learned models use balanced class weights, $w_c = N/(K N_c)$ with $K=3$, so that errors on Dropout and Enrolled are penalized more heavily than errors on Graduate.
-
-\paragraph{Hyperparameter tuning} For each stage and model we run randomized search with 5-fold stratified cross-validation on the training set, scoring macro F1, and then refit the best configuration on the full training set. Search spaces: regularization strength $C$ (log-uniform in $[10^{-3},10^{2}]$) for logistic regression; number of trees, maximum depth, minimum leaf size and \texttt{max\_features} for the random forest; and learning rate, depth, number of leaves, minimum leaf size, L2 penalty and iterations for boosting. Selected values are saved in \texttt{best\_params.json}.
-
-\paragraph{Ablations} So far, the stage comparison is itself our main ablation: it measures what each additional group of features (semester~1, then semester~2) contributes to every model. We have not yet ablated imbalance handling (class weights versus SMOTE versus none) or the macroeconomic features.
-
+where $p_{i,y_i}$ is the softmax probability assigned to student $i$'s true class and the intercept is not penalized. A larger $C$ means weaker regularization. It is optimized with L-BFGS, a quasi-Newton optimization method. It’s the default solver in scikit-learn’s LogisticRegression. It’s a good fit for logistic regression because the loss is smooth and convex, so it converges quickly and reliably.
+\emph{Gradient boosting} minimizes the same multiclass cross-entropy, adding one small regression tree per iteration that is fit to the gradient of the loss with respect to the current predictions, scaled by a learning rate. The histogram-based implementation first bins each feature, which makes split search fast. A 10\% internal validation split stops training early once the validation loss stops improving.
+\emph{Random forest} has no single global loss: each tree is trained on a bootstrap sample, considers a random subset of features at every split, and chooses splits by Gini impurity; the forest's predicted class probabilities are averaged over trees.
+ 
+\paragraph{Hyperparameter tuning} For each stage and model we run randomized search with 5-fold stratified cross-validation on the training set, scoring macro F1, and refit the best configuration on the full training set. We sample 15 configurations for logistic regression and 20 each for the random forest and gradient boosting. The search spaces are: regularization strength $C$ (log-uniform in $[10^{-3},10^{2}]$) for logistic regression; number of trees, maximum depth, minimum leaf size and \texttt{max\_features} for the random forest; and learning rate, depth, number of leaves, minimum leaf size, L2 penalty and number of iterations for boosting. Selected values are saved in \texttt{best\_params.json}. We tune on macro F1 rather than on dropout recall alone so that the Enrolled class is not sacrificed entirely.
+ 
+\paragraph{Ablations} So far, the stage comparison is itself our main ablation: it measures what each additional group of features (semester~1, then semester~2) contributes to every model. We have not yet ablated imbalance handling or the macroeconomic features, and these are planned for the next phase.
+ 
+\paragraph{Implementation issues and limitations} Firstly, the tree models receive the nominal code columns as ordinal-encoded integers, which imposes an arbitrary order on categories such as course; trees can still isolate individual codes by repeated splits, but native categorical handling or target encoding may do better and is something we may test. Second, because hyperparameters are tuned on the same folds used to produce the validation scores, those scores are slightly optimistic, so we rely on the held-out test set for final comparisons. Third, all results come from a single train/test split, so differences of a couple of points in macro F1 between models are within the noise of an 885-student test set.
 %% ---------------------------------------------------------------- 6
 \section{Results and Evaluation}
 \paragraph{Evaluation strategy} We use the single stratified train/test split from Section~3. Validation estimates come from 5-fold stratified cross-validated out-of-fold predictions on the training set; test estimates come from the refit model on the held-out test set. Macro F1 and dropout recall are our main metrics, because accuracy is misleading with imbalanced classes and a missed dropout is the costliest error. We also report dropout precision, Enrolled recall, balanced accuracy, log loss and the multiclass Brier score, and examine confusion matrices.
@@ -149,6 +150,78 @@ optimized with L-BFGS. Gradient boosting minimizes the same multiclass cross-ent
 %% ---------------------------------------------------------------- Team
 \section*{Team Contributions}
 
-\bibliography{custom}
+We both worked on and finished the code together. We both checked the final results table against the pipeline output.
+\textbf{Anam Khan} wrote the Dataset, Features, Results and Evaluation, and Feedback and Plans sections. 
+\textbf{Haniya Kashif} wrote the Introduction, Related Work and Implementation sections, reviewed the code and comments, and compiled the team contributions. 
 
+\begin{thebibliography}{99}
+ 
+  \bibitem[{Breiman(2001)}]{breiman2001}
+  Leo Breiman. 2001.
+  \newblock Random forests.
+  \newblock \emph{Machine Learning}, 45(1):5--32.
+   
+  \bibitem[{Chawla et~al.(2002)Chawla, Bowyer, Hall, and Kegelmeyer}]{chawla2002}
+  Nitesh~V. Chawla, Kevin~W. Bowyer, Lawrence~O. Hall, and W.~Philip Kegelmeyer. 2002.
+  \newblock SMOTE: Synthetic minority over-sampling technique.
+  \newblock \emph{Journal of Artificial Intelligence Research}, 16:321--357.
+   
+  \bibitem[{Chen and Guestrin(2016)}]{chen2016xgboost}
+  Tianqi Chen and Carlos Guestrin. 2016.
+  \newblock XGBoost: A scalable tree boosting system.
+  \newblock In \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, pages 785--794.
+   
+  \bibitem[{Friedman(2001)}]{friedman2001}
+  Jerome~H. Friedman. 2001.
+  \newblock Greedy function approximation: A gradient boosting machine.
+  \newblock \emph{The Annals of Statistics}, 29(5):1189--1232.
+   
+  \bibitem[{Grinsztajn et~al.(2022)Grinsztajn, Oyallon, and Varoquaux}]{grinsztajn2022}
+  L\'eo Grinsztajn, Edouard Oyallon, and Ga\"el Varoquaux. 2022.
+  \newblock Why do tree-based models still outperform deep learning on typical tabular data?
+  \newblock In \emph{Advances in Neural Information Processing Systems (Datasets and Benchmarks Track)}, volume~35.
+   
+  \bibitem[{Hardt et~al.(2016)Hardt, Price, and Srebro}]{hardt2016}
+  Moritz Hardt, Eric Price, and Nathan Srebro. 2016.
+  \newblock Equality of opportunity in supervised learning.
+  \newblock In \emph{Advances in Neural Information Processing Systems}, volume~29, pages 3315--3323.
+   
+  \bibitem[{Ke et~al.(2017)Ke, Meng, Finley, Wang, Chen, Ma, Ye, and Liu}]{ke2017lightgbm}
+  Guolin Ke, Qi~Meng, Thomas Finley, Taifeng Wang, Wei Chen, Weidong Ma, Qiwei Ye, and Tie-Yan Liu. 2017.
+  \newblock LightGBM: A highly efficient gradient boosting decision tree.
+  \newblock In \emph{Advances in Neural Information Processing Systems}, volume~30, pages 3146--3154.
+   
+  \bibitem[{Lundberg and Lee(2017)}]{lundberg2017}
+  Scott~M. Lundberg and Su-In Lee. 2017.
+  \newblock A unified approach to interpreting model predictions.
+  \newblock In \emph{Advances in Neural Information Processing Systems}, volume~30, pages 4765--4774.
+   
+  \bibitem[{Martins et~al.(2021)Martins, Tolledo, Machado, Baptista, and Realinho}]{martins2021}
+  M\'onica~V. Martins, Daniel Tolledo, Jorge Machado, Lu\'{\i}s M.~T. Baptista, and Valentim Realinho. 2021.
+  \newblock Early prediction of student's performance in higher education: A case study.
+  \newblock In \emph{Trends and Applications in Information Systems and Technologies (WorldCIST 2021), Volume 1}, Advances in Intelligent Systems and Computing, pages 166--175. Springer.
+  \newblock DOI: 10.1007/\allowbreak 978-3-030-72657-7\_16.
+   
+  \bibitem[{Martins et~al.(2023)Martins, Baptista, Machado, and Realinho}]{martins2023}
+  M\'onica~V. Martins, Lu\'{\i}s Baptista, Jorge Machado, and Valentim Realinho. 2023.
+  \newblock Multi-class phased prediction of academic performance and dropout in higher education.
+  \newblock \emph{Applied Sciences}, 13(8):4702.
+   
+  \bibitem[{Niculescu-Mizil and Caruana(2005)}]{niculescu2005}
+  Alexandru Niculescu-Mizil and Rich Caruana. 2005.
+  \newblock Predicting good probabilities with supervised learning.
+  \newblock In \emph{Proceedings of the 22nd International Conference on Machine Learning}, pages 625--632.
+   
+  \bibitem[{Realinho et~al.(2022)Realinho, Machado, Baptista, and Martins}]{realinho2022}
+  Valentim Realinho, Jorge Machado, Lu\'{\i}s Baptista, and M\'onica~V. Martins. 2022.
+  \newblock Predicting student dropout and academic success.
+  \newblock \emph{Data}, 7(11):146.
+   
+  \bibitem[{Tinto(1975)}]{tinto1975}
+  Vincent Tinto. 1975.
+  \newblock Dropout from higher education: A theoretical synthesis of recent research.
+  \newblock \emph{Review of Educational Research}, 45(1):89--125.
+   
+  \end{thebibliography}
+  
 \end{document}
